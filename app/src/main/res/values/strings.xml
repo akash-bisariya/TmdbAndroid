@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">TmdbAndroid</string>
+    <string name="txt_overview">Overview:</string>
+</resources>

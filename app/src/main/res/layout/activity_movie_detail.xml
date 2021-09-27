@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.tmdbandroid.viewmodel.MovieDetailViewModel" />
+
+        <variable
+            name="imageUrl"
+            type="String" />
+
+        <variable
+            name="loading"
+            type="java.lang.Boolean"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/top_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.MovieDetailActivity"
+        android:visibility="@{viewmodel.movieDetail.original_title}">
+
+        <ImageView
+            android:id="@+id/iv_movie_image"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:scaleType="fitXY"
+            app:urlImage="@{ viewmodel.movieDetail.poster_path }"/>
+
+        <TextView
+            android:id="@+id/tv_movie_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/iv_movie_image"
+            style="@style/text_view_normal_black_bold"
+            android:background="@color/white"
+            android:text="@{viewmodel.movieDetail.original_title}"/>
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            style="@style/text_view_small_gray"
+            app:layout_constraintTop_toBottomOf="@id/tv_movie_title"
+            android:text="@{viewmodel.movieDetail.release_date}"/>
+
+        <TextView
+            android:id="@+id/tv_popularity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_date"
+            style="@style/text_view_small_gray"
+            android:padding="@dimen/padding_10dp"
+            android:text="@{viewmodel.movieDetail.popularity+`%`}"/>
+
+        <TextView
+            android:id="@+id/tv_movie_tag_line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_10dp"
+            android:textStyle="italic|bold"
+            style="@style/text_view_normal_black_bold"
+            app:layout_constraintTop_toBottomOf="@id/tv_popularity"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@{viewmodel.movieDetail.tagline}"
+            android:visibility="@{viewmodel.movieDetail.tagline}"/>
+
+        <TextView
+            android:id="@+id/tv_overview_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_movie_tag_line"
+            android:text="@string/txt_overview"
+            android:paddingTop="@dimen/padding_10dp"
+            android:paddingRight="@dimen/padding_10dp"
+            android:paddingLeft="@dimen/padding_10dp"
+            style="@style/text_view_normal_black_bold"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_overview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            style="@style/text_view_small_gray"
+            android:paddingBottom="@dimen/padding_10dp"
+            android:paddingRight="@dimen/padding_10dp"
+            android:paddingLeft="@dimen/padding_10dp"
+            app:layout_constraintTop_toBottomOf="@id/tv_overview_label"
+            android:text="@{viewmodel.movieDetail.overview}"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
