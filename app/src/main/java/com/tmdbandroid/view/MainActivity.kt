@@ -6,14 +6,16 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.tmdbandroid.R
 import com.tmdbandroid.base.getViewModel
 import com.tmdbandroid.model.data.MovieData
 import com.tmdbandroid.model.network.NetworkResult
 import com.tmdbandroid.viewmodel.MovieListingViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_movie_detail.*
 
-class MainActivity : AppCompatActivity(),MovieAdapterOnSelect {
+class MainActivity : AppCompatActivity(), MovieAdapterOnSelect {
 
     private lateinit var movieViewModel: MovieListingViewModel
 
@@ -31,7 +33,9 @@ class MainActivity : AppCompatActivity(),MovieAdapterOnSelect {
 
         movieViewModel.notificationListingLiveDataNetworkState.observe(this, Observer {
             pb_progress.visibility = View.GONE
-
+            if (it is NetworkResult.Error) {
+                Snackbar.make(top_view, "Something went wrong", Snackbar.LENGTH_LONG)
+            }
         })
 
 
@@ -40,12 +44,11 @@ class MainActivity : AppCompatActivity(),MovieAdapterOnSelect {
         rv_movie.adapter = adapter
 
 
-
     }
 
     override fun onSelectMovie(movieData: MovieData) {
         val intent = Intent(this, MovieDetailActivity::class.java)
-        intent.putExtra("MovieId",movieData.id.toString())
+        intent.putExtra("MovieId", movieData.id.toString())
         startActivity(intent)
     }
 }

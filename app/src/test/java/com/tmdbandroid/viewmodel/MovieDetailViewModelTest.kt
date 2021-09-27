@@ -1,6 +1,5 @@
 package com.tmdbandroid.viewmodel
 
-import android.content.res.Resources
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.tmdbandroid.TestCoroutineRule
@@ -9,7 +8,6 @@ import com.tmdbandroid.model.network.NetworkResult
 import com.tmdbandroid.model.repository.MovieDetailRepository
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertNotNull
-import junit.framework.TestCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before
 import org.junit.Rule
@@ -17,11 +15,9 @@ import org.junit.Test
 import org.junit.rules.TestRule
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito
 import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
-import org.mockito.stubbing.Answer
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
@@ -33,7 +29,7 @@ class MovieDetailViewModelTest {
     val testCoroutineRule = TestCoroutineRule()
 
     @Mock
-    private lateinit var apiUsersObserver: Observer<MovieDetail>
+    private lateinit var apiResultObserver: Observer<MovieDetail>
 
     @Mock
     private lateinit var viewModel: MovieDetailViewModel
@@ -60,7 +56,8 @@ class MovieDetailViewModelTest {
             )
         )
 
-        viewModel.movieDetail.observeForever(apiUsersObserver)
+        viewModel.movieDetail.observeForever(apiResultObserver)
+        viewModel.getMovieDetail(anyString())
         assertNotNull(viewModel.movieDetail)
     }
 
@@ -74,7 +71,7 @@ class MovieDetailViewModelTest {
                     movieDetailRepository, ""
                 )
             )
-            viewModel.movieDetail.observeForever(apiUsersObserver)
+            viewModel.movieDetail.observeForever(apiResultObserver)
             `when`(movieDetailRepository.getMovieDetail(anyString())).thenReturn(
                 NetworkResult.Success(movieDetail)
             )
@@ -93,7 +90,7 @@ class MovieDetailViewModelTest {
                     movieDetailRepository, anyString()
                 )
             )
-            viewModel.movieDetail.observeForever(apiUsersObserver)
+            viewModel.movieDetail.observeForever(apiResultObserver)
             `when`(movieDetailRepository.getMovieDetail(anyString())).thenReturn(
                 NetworkResult.Error(errorMessage)
             )
