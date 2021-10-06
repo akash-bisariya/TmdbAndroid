@@ -6,14 +6,18 @@ import androidx.lifecycle.viewModelScope
 import com.tmdbandroid.model.data.MovieDetail
 import com.tmdbandroid.model.network.NetworkResult
 import com.tmdbandroid.model.repository.MovieDetailRepository
+import dagger.assisted.Assisted
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MovieDetailViewModel(private val movieRepository:MovieDetailRepository,id:String) : ViewModel() {
+class MovieDetailViewModel @Inject constructor(private val movieRepository:MovieDetailRepository
+//                                               , @Assisted id:String
+) : ViewModel() {
     val movieDetail = MutableLiveData<MovieDetail>()
     val error = MutableLiveData<String>()
 
     init {
-        getMovieDetail(id)
+        getMovieDetail("123")
     }
 
     fun getMovieDetail(id:String){

@@ -3,9 +3,9 @@ package com.tmdbandroid.view
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.tmdbandroid.model.data.MovieData
-import com.tmdbandroid.model.network.ApiClient
 import com.tmdbandroid.model.network.MovieService
 import com.tmdbandroid.model.network.NetworkResult
+import com.tmdbandroid.model.network.RetrofitModuleListing
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -16,7 +16,7 @@ class MovieListingDataSource(
     private val notificationLiveDataNetworkState: MutableLiveData<NetworkResult<Boolean>>
 ) :
     PageKeyedDataSource<String, MovieData>() {
-    private val movieService = ApiClient.getRetrofitInstance().create(MovieService::class.java)
+    private val movieService = RetrofitModuleListing.getRetrofitInstance().create(MovieService::class.java)
     private val job = Job()
     private var maxPageCount: Int = 0
     private val scope = CoroutineScope(coroutineContext + job)
